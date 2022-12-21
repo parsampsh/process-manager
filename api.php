@@ -10,8 +10,6 @@ if (file_exists(__DIR__ . '/settings.php')) {
     require_once __DIR__ . '/settings.example.php';
 }
 
-require_once __DIR__ . '/src/views/head.php';
-
 // check the password
 api_authentication();
 
