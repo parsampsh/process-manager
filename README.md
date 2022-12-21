@@ -18,7 +18,7 @@ Then:
 $ php -S localhost:8000
 ```
 
-And go to http://localhost:8000/dashboard.php and use the app!
+And go to http://localhost:8000/index.php and use the app!
 
 ## Configuration
 Totally we have 2 elements in the configuration file (`settings.example.php`): **Users** and **Commands**
