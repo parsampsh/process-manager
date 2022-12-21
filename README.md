@@ -172,7 +172,7 @@ But if it's `false` the error message will be written in `message`.
 There is also another `action` that you can get list of the commands with it:
 
 ```shell
-$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=commands_list
+$ curl http://localhost:8000/api.php?username=admin&password=123&action=commands_list
 ```
 
 ## License
