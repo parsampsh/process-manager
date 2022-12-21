@@ -3,15 +3,6 @@
 ### Improve appearance and styles
 Make the app look better and prettier.
 
-### API system
-We need to create API for these 5 actions:
-
-- Get process status
-- Start process
-- Stop process
-- Get logs
-- Get stats
-
 ### Add resource usage monitoring
 We need to add some stats about the resource usage of the process.
 
