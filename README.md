@@ -126,5 +126,54 @@ const USERS = [
 In the `permissions_for_commands`, we use names of the commands in array keys,
 and permissions for them in the array value.
 
+## API
+This app also has an API system.
+There are 5 actions available:
+
+- `status`: Get status of the process
+- `logs`: Get logs of the process
+- `stats`: Get stats of the process
+- `start`: Start the process
+- `stop`: Stop the process
+
+```shell
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main
+```
+
+As you can see above, `username`, `password` and `command` arguments should always be passed to the APIs.
+
+If there is no user configured, you can ignore `username` and `password`.
+You can also ignore the `command` too, if you do the first command will be selected by default.
+
+Then you can use `action` argument to do what you want:
+
+```shell
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=status
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=logs
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=stats
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=start
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=stop
+```
+
+The APIs check the permissions, and if you don't have a permission to do something,
+they will return `403` response code. And a JSON like this:
+
+```json
+{
+    "ok": false,
+    "message": "You don't have permission to ..."
+}
+```
+
+The `ok` field is in all of the responses.
+If it's `true` it means there is no error.
+But if it's `false` the error message will be written in `message`.
+
+There is also another `action` that you can get list of the commands with it:
+
+```shell
+$ curl http://localhost:8000/api.php?username=admin&password=123&command=Main&action=commands_list
+```
+
 ## License
 This project is created and maintained by [Parsa](https://github.com/parsampsh) and licensed under [MIT License](LICENSE).

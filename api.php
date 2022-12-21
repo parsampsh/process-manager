@@ -21,6 +21,7 @@ $allowedActions = [
     'logs',
     'start',
     'stop',
+    'commands_list',
 ];
 
 if (!isset($_GET['action'])) {
@@ -89,6 +90,8 @@ if ($_GET['action'] == 'status') {
             $response['message'] = 'Process stopped successfully';
         }
     }
+} else if ($_GET['action'] == 'commands_list') {
+    $response['commands'] = array_keys(COMMANDS);
 }
 
 api_response($response, $responseStatusCode);
