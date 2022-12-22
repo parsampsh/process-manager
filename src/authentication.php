@@ -122,7 +122,7 @@ function authentication(): void
  */
 function make_log_entry($username, string $log): void
 {
-    $content = PHP_EOL . '[' . date('Y-m-d H:i:s') . '] [User ' . $username . '] ' . $log;
+    $content = PHP_EOL . '[' . date('Y-m-d H:i:s') . '] [User ' . $username . '] [Command ' . get_current_selected_command()['name'] . '] ' . $log;
     $file = fopen(USER_LOGS_FILE, 'a');
     fwrite($file, $content);
     fclose($file);
