@@ -148,7 +148,7 @@ function unix_kill_process(string $signal, int $processID): void
  */
 function win_kill_process(string $signal, int $processID): void
 {
-    // TODO : write this function
+    exec('taskkill /PID ' . $processID);
 }
 
 
@@ -194,5 +194,5 @@ function unix_tail_file(int $linesCount, string $file)
  */
 function win_tail_file(int $linesCount, string $file)
 {
-    return ''; // TODO : write this function
+    return shell_exec('Get-Content ' . $file . ' -Tail ' . $linesCount);
 }
