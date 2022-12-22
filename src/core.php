@@ -1,6 +1,9 @@
 <?php
 
 
+require_once __DIR__ . '/os.php';
+
+
 /**
  * This function returns the options of the current selected command
  * 
@@ -39,11 +42,7 @@ function run_command_in_bg(string $command, string $outputFile = '/dev/null'): i
 {
     $original_working_dir = getcwd();
     chdir(get_current_selected_command()['working_dir']);
-    $pid = shell_exec(sprintf(
-        '%s > %s 2>&1 & echo $!',
-        $command,
-        $outputFile,
-    ));
+    $pid = os_shell_exec($command, $outputFile);
     chdir($original_working_dir);
     return $pid;
 }
@@ -85,7 +84,7 @@ function get_current_process_id(): int|bool
     }
 
     // check if the process is still running
-    if (!file_exists("/proc/$processID")){
+    if (!os_process_exists($processID)) {
         return false;
     }
 
@@ -125,7 +124,7 @@ function stop_process(): void
 
     user_make_log_entry('Stopped the process');
 
-    exec('kill -' . get_current_selected_command()['kill_signal'] . ' ' . get_current_process_id());
+    os_kill_process(get_current_selected_command()['kill_signal'], get_current_process_id());
     while (get_current_process_id() !== false) {
         // just wait until process stops...
     }
@@ -146,7 +145,7 @@ function load_logs(): string|null
     user_make_log_entry('Read the process logs');
 
     touch(get_current_selected_command()['log_file']);
-    return shell_exec('tail -n ' . get_current_selected_command()['log_tail_maximum_lines'] . ' ' . get_current_selected_command()['log_file']);
+    return os_tail_file(get_current_selected_command()['log_tail_maximum_lines'], get_current_selected_command()['log_file']);
 }
 
 
