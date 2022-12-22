@@ -24,7 +24,7 @@ function is_unix(): bool
 function os_shell_exec(string $command, string $outputFile = '/dev/null'): int
 {
     if (is_unix()) {
-        return    unix_shell_exec($command, $outputFile);
+        return unix_shell_exec($command, $outputFile);
     } else {
         return win_shell_exec($command, $outputFile);
     }
@@ -73,7 +73,7 @@ function win_shell_exec(string $command, string $outputFile = '/dev/null'): int
 function os_process_exists(int $processID): bool
 {
     if (is_unix()) {
-        return    unix_process_exists($processID);
+        return unix_process_exists($processID);
     } else {
         return win_process_exists($processID);
     }
