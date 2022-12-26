@@ -11,7 +11,7 @@
 // Also if you want to give someone all of the permissions, you don't need to write them all.
 // You can write it this way: 'Main' => PERMISSION_ALL
 const USERS = [
-    'admin' => [
+    /*'admin' => [
         'password' => 'admin',
         'permissions_for_commands' => [
             'Main' => PERMISSION_ALL,
@@ -19,7 +19,7 @@ const USERS = [
                 PERMISSION_READ_LOG,
             ],
         ],
-    ],
+    ],*/
 ];
 
 
