@@ -1,7 +1,7 @@
 # TODO
 
-### 1. Add ability to Pause and Resume the process
-We need Pause and Resume actions to be able to pause the processes.
+### 1. Add ability to create custom actions for the process
+We need an ability to define custom actions for processes to send a specific signal to them.
 
 ### 2. Add resource usage monitoring
 We need to add some stats about the resource usage of the process.
