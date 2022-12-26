@@ -49,7 +49,14 @@ if ($_GET['action'] == 'status') {
     $response['is_running'] = $isRunning;
     $response['process_id'] = $processID;
 } else if ($_GET['action'] == 'stats') {
-    $response['message'] = 'Coming soon...';
+    if (!user_has_permission(PERMISSION_READ_STATS)) {
+        $response['ok'] = false;
+        $response['message'] = 'You don\'t have permission to read the stats for this command';
+        $responseStatusCode = 403;
+    } else {
+        $response['message'] = 'Coming soon...';
+        user_make_log_entry('Read process stats');
+    }
 } else if ($_GET['action'] == 'logs') {
     if (!user_has_permission(PERMISSION_READ_LOG)) {
         $response['ok'] = false;
