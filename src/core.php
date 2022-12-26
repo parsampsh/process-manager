@@ -11,8 +11,24 @@ require_once __DIR__ . '/os.php';
  */
 function validate_configuration(): bool
 {
-    // TODO : write this function
-    return true;
+    $result = true;
+    $reasons = []   ;
+
+    function handle_single_check(&$reasons, bool $check, string $reason): bool {
+        if (!$check) {
+            array_push($reasons, $reason);
+        }
+
+        return $check;
+    }
+
+    $result = $result && handle_single_check($reasons, defined('USER_LOGS_FILE'), 'Option "USER_LOGS_FILE" is not defined');
+    $result = $result && handle_single_check($reasons, is_string(USER_LOGS_FILE), 'Option "USER_LOGS_FILE" should be a string');
+    $result = $result && handle_single_check($reasons, defined('USERS'), 'Const "USERS" is not defined');
+
+    define('CONFIGURATION_ISSUES', $reasons);
+
+    return $result;
 }
 
 
@@ -26,6 +42,11 @@ function handle_config_validation()
     if (!validate_configuration()) {
         $alert_text = "ERROR: The configurations are invalid<br />Solution: Edit file " . realpath(__DIR__ . '/../') . '/settings.php';
         $alert_color = "red";
+        $alert_text .= '<ul>';
+        foreach (CONFIGURATION_ISSUES as $issue) {
+            $alert_text .= '<li>' . $issue . '</li>';
+        }
+        $alert_text .= '</ul>';
         require_once __DIR__ . '/views/alert.php';
         require_once __DIR__ . '/views/foot.php';
         die();
