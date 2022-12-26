@@ -36,3 +36,20 @@ function api_authentication(): void
         ], 401);
     }
 }
+
+
+/**
+ * This function handles returning an error if configurations are not valid for API response
+ * 
+ * @return void
+ */
+function api_handle_config_validation()
+{
+    if (!validate_configuration()) {
+        $message = "ERROR: The configurations are invalid. Solution: Edit file " . realpath(__DIR__ . '/../') . '/settings.php';
+        api_response([
+            'ok' => false,
+            'message' => $message,
+        ], 500);
+    }
+}

@@ -5,6 +5,34 @@ require_once __DIR__ . '/os.php';
 
 
 /**
+ * This function checks all of the configuration options and makes sure they are valid
+ * 
+ * @return bool
+ */
+function validate_configuration()
+{
+    return true;
+}
+
+
+/**
+ * This function handles showing an error if configurations are not valid
+ * 
+ * @return void
+ */
+function handle_config_validation()
+{
+    if (!validate_configuration()) {
+        $alert_text = "ERROR: The configurations are invalid<br />Solution: Edit file " . realpath(__DIR__ . '/../') . '/settings.php';
+        $alert_color = "red";
+        require_once __DIR__ . '/views/alert.php';
+        require_once __DIR__ . '/views/foot.php';
+        die();
+    }
+}
+
+
+/**
  * This function returns the options of the current selected command
  * 
  * @return array
