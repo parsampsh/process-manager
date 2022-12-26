@@ -79,7 +79,7 @@ function validate_configuration(): bool
                         $result = handle_single_check(is_array($permissions), 'Value of key "'.convert_to_string($cmd_permission_name).'" in user "'.convert_to_string($user_name).'"\'s "permissions_for_commands" is not an array') && $result;
                         if (is_array($permissions)) {
                             foreach ($permissions as $permission) {
-                                $result = handle_single_check(is_integer($permission), 'Item "'.convert_to_string($permission).'" in user "'.convert_to_string($user_name).'"\'s "permissions_for_commands" is not a numeric value "' . convert_to_string($user_name) . '" is not set or is not an array') && $result;
+                                $result = handle_single_check(is_integer($permission), 'Item "'.convert_to_string($permission).'" in user "'.convert_to_string($user_name).'"\'s "permissions_for_commands" "'.convert_to_string($cmd_permission_name).'" is not a numeric value') && $result;
                             }
                         }
                     }
