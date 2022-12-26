@@ -51,6 +51,8 @@ $logs = load_logs();
                 <option <?= $currentSelectedCommand == $command ? 'selected' : '' ?> value="<?= $command ?>"><?= $command ?></option>
             <?php } ?>
         </select>
+
+        <p><?= get_current_selected_command()['description'] ?></p>
     </form>
 </div>
 

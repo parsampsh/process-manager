@@ -61,6 +61,7 @@ function validate_configuration(): bool
                 $result = handle_single_check(isset($command['log_tail_maximum_lines']) && is_integer($command['log_tail_maximum_lines']), 'Option "log_tail_maximum_lines" for command "' . convert_to_string($command_name) . '" is not set or is not an integer') && $result;
                 $result = handle_single_check(isset($command['process_id_file']) && is_string($command['process_id_file']), 'Option "process_id_file" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['kill_signal']) && is_string($command['kill_signal']), 'Option "kill_signal" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
+                $result = handle_single_check(isset($command['description']) && is_string($command['description']), 'Option "description" for command "' . convert_to_string($command_name) . '" is not set or is not a string. If you don\'t want to set a description for the command, just put a blank "" string in it') && $result;
             }
         }
     }
