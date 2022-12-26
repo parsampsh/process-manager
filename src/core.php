@@ -9,8 +9,9 @@ require_once __DIR__ . '/os.php';
  * 
  * @return bool
  */
-function validate_configuration()
+function validate_configuration(): bool
 {
+    // TODO : write this function
     return true;
 }
 
