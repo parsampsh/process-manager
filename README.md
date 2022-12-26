@@ -94,7 +94,7 @@ const COMMANDS = [
         'log_file' => __DIR__ . '/log-file.txt', // a file to log command output to it
         'log_tail_maximum_lines' => 20, // number of the lines for the log file tail when we show the logs
         'process_id_file' => 'process-id.txt', // a file to store the process id for the command
-        'kill_signal' => 'TERM', // the signal you want to be sent to the command when the stop button gets pressed
+        'kill_signal' => S_TERM, // the signal you want to be sent to the command when the stop button gets pressed
     ],
     'Second' => [
         'command' => 'python3 test-script.py',
@@ -102,7 +102,7 @@ const COMMANDS = [
         'log_file' => __DIR__ . '/log-file-2.txt',
         'log_tail_maximum_lines' => 20,
         'process_id_file' => 'process-id-2.txt',
-        'kill_signal' => 'TERM',
+        'kill_signal' => S_KILL, // these options are available: S_HUP, S_INT, S_QUIT, S_ILL, S_TRAP, S_IOT, S_BUS, S_FPE, S_KILL, S_USR1, S_SEGV, S_USR2, S_PIPE, S_ALRM, S_TERM, S_STKFLT, S_CHLD, S_CONT, S_STOP, S_TSTP, S_TTIN, S_TTOU, S_URG, S_XCPU, S_XFSZ, S_VTALRM, S_PROF, S_WINCH, S_POLL, S_PWR, S_SYS
     ],
 ];
 ```
