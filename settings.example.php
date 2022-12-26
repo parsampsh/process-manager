@@ -33,7 +33,7 @@ const USER_LOGS_FILE = 'user-logs.txt';
 // User can select which command to manage in a dropdown in the main page of the app
 const COMMANDS = [
     'Main' => [
-        'command' => 'python3 test-script.py', // the command to run
+        'command' => 'python3 -u test-script.py', // the command to run
         'working_dir' => __DIR__, // working directory of the command
         'log_file' => __DIR__ . '/log-file.txt', // a file to log command output to it
         'log_tail_maximum_lines' => 20, // number of the lines for the log file tail when we show the logs
@@ -41,7 +41,7 @@ const COMMANDS = [
         'kill_signal' => 'TERM', // the signal you want to be sent to the command when the stop button gets pressed
     ],
     'Second' => [
-        'command' => 'python3 test-script.py',
+        'command' => 'python3 -u test-script-2.py',
         'working_dir' => __DIR__,
         'log_file' => __DIR__ . '/log-file-2.txt',
         'log_tail_maximum_lines' => 20,
