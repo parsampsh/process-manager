@@ -2,34 +2,8 @@
 
 
 require_once __DIR__ . '/os.php';
+require_once __DIR__ . '/validation.php';
 
-
-/**
- * This function checks all of the configuration options and makes sure they are valid
- * 
- * @return bool
- */
-function validate_configuration(): bool
-{
-    $result = true;
-    $reasons = []   ;
-
-    function handle_single_check(&$reasons, bool $check, string $reason): bool {
-        if (!$check) {
-            array_push($reasons, $reason);
-        }
-
-        return $check;
-    }
-
-    $result = $result && handle_single_check($reasons, defined('USER_LOGS_FILE'), 'Option "USER_LOGS_FILE" is not defined');
-    $result = $result && handle_single_check($reasons, is_string(USER_LOGS_FILE), 'Option "USER_LOGS_FILE" should be a string');
-    $result = $result && handle_single_check($reasons, defined('USERS'), 'Const "USERS" is not defined');
-
-    define('CONFIGURATION_ISSUES', $reasons);
-
-    return $result;
-}
 
 
 /**
@@ -43,13 +17,14 @@ function handle_config_validation()
         $alert_text = "ERROR: The configurations are invalid<br />Solution: Edit file " . realpath(__DIR__ . '/../') . '/settings.php';
         $alert_color = "red";
         $alert_text .= '<ul>';
-        foreach (CONFIGURATION_ISSUES as $issue) {
+        foreach ($GLOBALS['CONFIGURATION_ISSUES'] as $issue) {
             $alert_text .= '<li>' . $issue . '</li>';
         }
         $alert_text .= '</ul>';
+        $alert_text .= 'Check out <a target="blank" href="https://github.com/parsampsh/process-manager#configuration">process manager documentation</a> for config instructions';
         require_once __DIR__ . '/views/alert.php';
-        require_once __DIR__ . '/views/foot.php';
         die();
+        require_once __DIR__ . '/views/foot.php';
     }
 }
 

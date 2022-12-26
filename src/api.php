@@ -47,7 +47,7 @@ function api_handle_config_validation()
 {
     if (!validate_configuration()) {
         $message = "ERROR: The configurations are invalid. Solution: Edit file " . realpath(__DIR__ . '/../') . '/settings.php and fix these issues:';
-        foreach (CONFIGURATION_ISSUES as $issue) {
+        foreach ($GLOBALS['CONFIGURATION_ISSUES'] as $issue) {
             $message .= ' --- ' . $issue;
         }
         api_response([
