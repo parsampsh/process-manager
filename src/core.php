@@ -24,7 +24,6 @@ function handle_config_validation()
         $alert_text .= 'Check out <a target="blank" href="https://github.com/parsampsh/process-manager#configuration">process manager documentation</a> for config instructions';
         require_once __DIR__ . '/views/alert.php';
         die();
-        require_once __DIR__ . '/views/foot.php';
     }
 }
 
