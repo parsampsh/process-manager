@@ -5,7 +5,6 @@ require_once __DIR__ . '/os.php';
 require_once __DIR__ . '/validation.php';
 
 
-
 /**
  * This function handles showing an error if configurations are not valid
  * 
