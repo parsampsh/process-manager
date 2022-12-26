@@ -102,8 +102,15 @@ function authentication(): void
         if (attempt_login($_GET)) {
             // authorized
         } else {
+            // check if there has been an attempt for login so we should show error
+            if (isset($_GET['attempt_login'])) {
+                $alert_text = "Invalid username or password";
+                $alert_color = "red";
+                require_once __DIR__ . '/views/alert.php';
+            }
             // show the login form
             require_once __DIR__ . '/views/login_form.php';
+            require_once __DIR__ . '/views/foot.php';
             die();
         }
     }

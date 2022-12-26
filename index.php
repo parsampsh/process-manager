@@ -37,14 +37,12 @@ $logs = load_logs();
 
 ?>
 
-<h2>Process Manager</h2>
-
 <div>
     <form method="GET">
         <input type="hidden" name="username" value="<?= isset($_GET['username']) ? $_GET['username'] : '' ?>" />
         <input type="hidden" name="password" value="<?= isset($_GET['password']) ? $_GET['password'] : '' ?>" />
 
-        <select onchange="event.target.parentNode.submit()" name="command">
+        <b>Process</b>: <select class="dropdown" onchange="event.target.parentNode.submit()" name="command">
             <?php $currentSelectedCommand = isset($_GET['command']) ? $_GET['command'] : ''; ?>
             <?php foreach (COMMANDS as $command => $options) { ?>
                 <option <?= $currentSelectedCommand == $command ? 'selected' : '' ?> value="<?= $command ?>"><?= $command ?></option>
@@ -70,13 +68,23 @@ $logs = load_logs();
         <h4>Actions</h4>
         <form method="POST">
             <?php if (user_has_permission(PERMISSION_START)) { ?>
-                <button class="button start-button" <?= $isRunning ? 'disabled' : '' ?> type="submit" name="start">Start</button>
+                <button class="button green-button" <?= $isRunning ? 'disabled' : '' ?> type="submit" name="start">Start</button>
             <?php } ?>
 
             <?php if (user_has_permission(PERMISSION_STOP)) { ?>
-                <button class="button stop-button" <?= $isRunning ? '' : 'disabled' ?> type="submit" name="stop">Stop</button>
+                <button class="button red-button" <?= $isRunning ? '' : 'disabled' ?> type="submit" name="stop">Stop</button>
             <?php } ?>
         </form>
+    </div>
+<?php } ?>
+
+<?php if (user_has_permission(PERMISSION_READ_STATS)) { ?>
+    <hr />
+    <div>
+        <h4 style="float: left;">Stats</h4>
+        <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
+        <div style="clear: both;"></div>
+        <pre class="logs-container">Coming soon...</pre>
     </div>
 <?php } ?>
 
@@ -84,7 +92,7 @@ $logs = load_logs();
     <hr />
     <div>
         <h4 style="float: left;">Logs</h4>
-        <a href="" class="button start-button" style="float: right; text-decoration: none;">Refresh</a>
+        <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
         <div style="clear: both;"></div>
         <pre class="logs-container"><?= $logs ?></pre>
     </div>
