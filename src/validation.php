@@ -63,6 +63,12 @@ function validate_configuration(): bool
                 $result = handle_single_check(isset($command['kill_signal']) && is_string($command['kill_signal']), 'Option "kill_signal" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['description']) && is_string($command['description']), 'Option "description" for command "' . convert_to_string($command_name) . '" is not set or is not a string. If you don\'t want to set a description for the command, just put a blank "" string in it') && $result;
                 $result = handle_single_check(isset($command['custom_actions']) && is_array($command['custom_actions']), 'Option "custom_actions" for command "' . convert_to_string($command_name) . '" is not set or is not an array. If you don\'t want to set any custom action for the command, just put an empty [] array in it') && $result;
+
+                if (isset($command['custom_actions']) && is_array($command['custom_actions'])) {
+                    foreach ($command['custom_actions'] as $custom_action) {
+                        $result = handle_single_check(is_string($custom_action), 'Item "' . convert_to_string($custom_action) . '" in command "'.convert_to_string($command_name).'"\'s "custom_actions" is not a string') && $result;
+                    }
+                }
             }
         }
     }
