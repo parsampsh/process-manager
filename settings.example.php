@@ -58,17 +58,17 @@ const COMMANDS = [
 // You can define custom actions in addition to "start" and "stop"
 // Then you can assign these to different commands
 $GLOBALS['CUSTOM_ACTIONS'] = [
-    'force_kill' => [
-        'title' => 'Force kill',
-        'description' => 'Kills the process forcefully',
-        'button_color' => 'yellow',
-        'is_visible' => (function () {
+    'force_kill' => [ // the key should be a unique name for the action
+        'title' => 'Force kill', // title of the button
+        'description' => 'Kills the process forcefully', // a description for action. you can leave it blank
+        'button_color' => 'yellow', // color of the button. it can be "red", "green", "blue" and "yellow"
+        'is_visible' => (function () { // in this closure you should return a boolean which determines if the current user has permission to run this action
             return user_has_permission(123); // if user doesn't have permission for this action, disable it
         }),
-        'is_enabled' => (function ($processID) {
+        'is_enabled' => (function ($processID) { // in this closure you should return a boolean which determines if the action is enabled or not
             return $processID !== false; // only enable if process is running
         }),
-        'handle' => (function ($processID) {
+        'handle' => (function ($processID) { // and in this closure, you will handle running the action
             exec('kill -KILL ' . $processID);
         }),
     ],

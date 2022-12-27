@@ -177,5 +177,34 @@ There is also another `action` that you can get list of the commands with it:
 $ curl http://localhost:8000/api.php?username=admin&password=123&action=commands_list
 ```
 
+## Custom actions
+We have 2 actions for processes by default: **Start** and **Stop**.
+
+But you may want to add more than that. You can use **Custom actions** system.
+
+You can define this in your config file:
+
+```php
+$GLOBALS['CUSTOM_ACTIONS'] = [
+    'force_kill' => [ // the key should be a unique name for the action
+        'title' => 'Force kill', // title of the button
+        'description' => 'Kills the process forcefully', // a description for action. you can leave it blank
+        'button_color' => 'yellow', // color of the button. it can be "red", "green", "blue" and "yellow"
+        'is_visible' => (function () { // in this closure you should return a boolean which determines if the current user has permission to run this action
+            return user_has_permission(123); // if user doesn't have permission for this action, disable it
+        }),
+        'is_enabled' => (function ($processID) { // in this closure you should return a boolean which determines if the action is enabled or not
+            return $processID !== false; // only enable if process is running
+        }),
+        'handle' => (function ($processID) { // and in this closure, you will handle running the action
+            exec('kill -KILL ' . $processID);
+        }),
+    ],
+    'another_action' => [
+        // ...
+    ],
+];
+```
+
 ## License
 This project is created and maintained by [Parsa](https://github.com/parsampsh) and licensed under [MIT License](LICENSE).
