@@ -108,6 +108,7 @@ function validate_configuration(): bool
                 $result = handle_single_check(isset($action['title']) && is_string($action['title']), 'Option "title" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($action['description']) && is_string($action['description']), 'Option "description" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string. You can leave it as a blank "" string') && $result;
                 $result = handle_single_check(isset($action['button_color']) && is_string($action['button_color']), 'Option "button_color" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string') && $result;
+                $result = handle_single_check(isset($action['is_visible']) && is_callable($action['is_visible']), 'Option "is_visible" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
                 $result = handle_single_check(isset($action['is_enabled']) && is_callable($action['is_enabled']), 'Option "is_enabled" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
                 $result = handle_single_check(isset($action['handle']) && is_callable($action['handle']), 'Option "handle" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
             }

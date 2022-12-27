@@ -62,11 +62,10 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
         'title' => 'Force kill',
         'description' => 'Kills the process forcefully',
         'button_color' => 'yellow',
+        'is_visible' => (function () {
+            return user_has_permission(123); // if user doesn't have permission for this action, disable it
+        }),
         'is_enabled' => (function ($processID) {
-            if (!user_has_permission(123)) {
-                return false; // user doesn't have permission for this action, so disable it
-            }
-
             return $processID !== false; // only enable if process is running
         }),
         'handle' => (function ($processID) {
