@@ -26,5 +26,16 @@
                 });
             }
         </script>
+
+        <style>
+            .yellow-button {
+                background-color: yellow;
+                color: #111;
+            }
+
+            .yellow-button:hover {
+                background-color: #F39C12;
+            }
+        </style>
     </body>
 </html>

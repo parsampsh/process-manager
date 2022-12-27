@@ -51,6 +51,7 @@
 
             .button:active {
                 background-color: black !important;
+                color: #fff;
             }
 
             .red-button {

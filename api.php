@@ -25,6 +25,8 @@ $allowedActions = [
     'commands_list',
 ];
 
+$allowedActions = array_merge($allowedActions, array_keys(get_custom_actions()));
+
 if (!isset($_GET['action'])) {
     api_response([
         'ok' => false,
@@ -100,6 +102,21 @@ if ($_GET['action'] == 'status') {
     }
 } else if ($_GET['action'] == 'commands_list') {
     $response['commands'] = array_keys(COMMANDS);
+} else if (isset(get_custom_actions()[$_GET['action']])) {
+    if (is_custom_action_visible($_GET['action'])) {
+        if (is_custom_action_enabled($_GET['action'])) {
+            run_custom_action($_GET['action']);
+            $response['message'] = 'Action ran successfully';
+        } else {
+            $response['ok'] = false;
+            $response['message'] = 'This action is not possible';
+            $responseStatusCode = 400;
+        }
+    } else {
+        $response['ok'] = false;
+        $response['message'] = 'You don\'t have permission to do this action';
+        $responseStatusCode = 403;
+    }
 }
 
 api_response($response, $responseStatusCode);

@@ -28,6 +28,15 @@ if (isset($_POST['start']) && !$isRunning) {
 } else if (isset($_POST['stop']) && $isRunning) {
     stop_process();
     refresh_page();
+} else {
+    foreach (get_custom_actions() as $action => $options) {
+        if (isset($_POST[$action])) {
+            if (is_custom_action_doable($action)) {
+                run_custom_action($action);
+                refresh_page();
+            }
+        }
+    }
 }
 
 
@@ -67,7 +76,7 @@ $logs = load_logs();
     <?php } ?>
 </div>
 
-<?php if (user_has_permission(PERMISSION_START) || user_has_permission(PERMISSION_STOP)) { ?>
+<?php if (user_has_permission(PERMISSION_START) || user_has_permission(PERMISSION_STOP) || is_there_any_visible_custom_action()) { ?>
     <hr />
     <div>
         <h4>Actions</h4>
@@ -78,6 +87,12 @@ $logs = load_logs();
 
             <?php if (user_has_permission(PERMISSION_STOP)) { ?>
                 <button class="button red-button" <?= $isRunning ? '' : 'disabled' ?> type="submit" name="stop">Stop</button>
+            <?php } ?>
+
+            <?php foreach (get_custom_actions() as $action => $options) { ?>
+                <?php if (is_custom_action_visible($action)) { ?>
+                    <button title="<?= $options['description'] ?>" class="button <?= $options['button_color'] ?>-button" <?= is_custom_action_enabled($action) ? '' : 'disabled' ?> type="submit" name="<?= $action ?>"><?= $options['title'] ?></button>
+                <?php } ?>
             <?php } ?>
         </form>
     </div>

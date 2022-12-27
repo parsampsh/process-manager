@@ -62,6 +62,13 @@ function validate_configuration(): bool
                 $result = handle_single_check(isset($command['process_id_file']) && is_string($command['process_id_file']), 'Option "process_id_file" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['kill_signal']) && is_string($command['kill_signal']), 'Option "kill_signal" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['description']) && is_string($command['description']), 'Option "description" for command "' . convert_to_string($command_name) . '" is not set or is not a string. If you don\'t want to set a description for the command, just put a blank "" string in it') && $result;
+                $result = handle_single_check(isset($command['custom_actions']) && is_array($command['custom_actions']), 'Option "custom_actions" for command "' . convert_to_string($command_name) . '" is not set or is not an array. If you don\'t want to set any custom action for the command, just put an empty [] array in it') && $result;
+
+                if (isset($command['custom_actions']) && is_array($command['custom_actions'])) {
+                    foreach ($command['custom_actions'] as $custom_action) {
+                        $result = handle_single_check(is_string($custom_action), 'Item "' . convert_to_string($custom_action) . '" in command "'.convert_to_string($command_name).'"\'s "custom_actions" is not a string') && $result;
+                    }
+                }
             }
         }
     }
@@ -85,6 +92,25 @@ function validate_configuration(): bool
                         }
                     }
                 }
+            }
+        }
+    }
+
+    $result = handle_single_check(isset($GLOBALS['CUSTOM_ACTIONS']), 'Global variable "CUSTOM_ACTIONS" is not defined') && $result;
+    $result = handle_single_check(isset($GLOBALS['CUSTOM_ACTIONS']) && is_array($GLOBALS['CUSTOM_ACTIONS']), 'Global variable "CUSTOM_ACTIONS" should be an array') && $result;
+
+    if (isset($GLOBALS['CUSTOM_ACTIONS']) && is_array($GLOBALS['CUSTOM_ACTIONS'])) {
+        foreach ($GLOBALS['CUSTOM_ACTIONS'] as $action_name => $action) {
+            $result = handle_single_check(is_string($action_name), 'Key "' . convert_to_string($action_name) . '" in CUSTOM_ACTIONS should be a string') && $result;
+            $result = handle_single_check(is_array($action), 'Action options for "' . convert_to_string($action_name) . '" should be an array') && $result;
+
+            if (is_array($action)) {
+                $result = handle_single_check(isset($action['title']) && is_string($action['title']), 'Option "title" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string') && $result;
+                $result = handle_single_check(isset($action['description']) && is_string($action['description']), 'Option "description" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string. You can leave it as a blank "" string') && $result;
+                $result = handle_single_check(isset($action['button_color']) && is_string($action['button_color']), 'Option "button_color" for custom action "' . convert_to_string($action_name) . '" is not set or is not a string') && $result;
+                $result = handle_single_check(isset($action['is_visible']) && is_callable($action['is_visible']), 'Option "is_visible" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
+                $result = handle_single_check(isset($action['is_enabled']) && is_callable($action['is_enabled']), 'Option "is_enabled" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
+                $result = handle_single_check(isset($action['handle']) && is_callable($action['handle']), 'Option "handle" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
             }
         }
     }
