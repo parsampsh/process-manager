@@ -1,7 +1,7 @@
 # TODO
 
-### 1. Add ability to create custom actions for the process
-We need an ability to define custom actions for processes to send a specific signal to them.
+### 1. Add arguments for custom commands
+We need to be able to define some arguments for custom actions from user input.
 
 ### 2. Write unit and feature tests for everything
 We need to write automatic tests for every single feature that we have in this app.
