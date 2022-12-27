@@ -236,5 +236,9 @@ const USERS = [
 ];
 ```
 
+And another thing to mention is that you can use all of the available functions in source code of this project
+in your closures for custom commands (`is_visible`, `is_enable`, `handle`).
+Like the example above that we've used `user_has_permission`.
+
 ## License
 This project is created and maintained by [Parsa](https://github.com/parsampsh) and licensed under [MIT License](LICENSE).
