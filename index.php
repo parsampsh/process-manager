@@ -99,7 +99,7 @@ $logs = load_logs();
         <h4 style="float: left;">Logs</h4>
         <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
         <div style="clear: both;"></div>
-        <pre class="logs-container"><?= $logs ?></pre>
+        <pre class="logs-container"><?= htmlspecialchars($logs) ?></pre>
     </div>
 <?php } ?>
 
