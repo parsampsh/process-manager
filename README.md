@@ -206,5 +206,35 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
 ];
 ```
 
+Then in the commands section, you can enable different actions for different commands:
+
+```php
+const COMMANDS = [
+    'command1' => [
+        // ...
+        'custom_actions' => ['force_kill'],
+        // ...
+    ],
+];
+```
+
+Also you can put your custom permissions for users to check them for custom actions (we used 123 in the example above):
+
+```php
+const USERS = [
+    // ...
+    'permissions_for_commands' => [
+        // ...
+        'command1' => [
+            // ...
+            123,
+            // ...
+        ],
+        // ...
+    ],
+    // ...
+];
+```
+
 ## License
 This project is created and maintained by [Parsa](https://github.com/parsampsh) and licensed under [MIT License](LICENSE).
