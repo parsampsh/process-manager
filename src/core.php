@@ -238,6 +238,10 @@ function is_custom_action_visible(string $action_name): bool
         return false;
     }
 
+    if (!in_array($action_name, get_current_selected_command()['custom_actions'])) {
+        return false;
+    }
+
     $callable = get_custom_actions()[$action_name]['is_visible'];
     return (bool) call_user_func_array($callable, [get_current_process_id()]);
 }
