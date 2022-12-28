@@ -1,15 +1,14 @@
 # TODO
 
-### 1. Add arguments for custom commands
-We need to be able to define some arguments for custom actions from user input.
+- Add default values for some config options
+- Don't show dropdown if there is only one process
+- Don't put username and password in GET parameters, put them in session instead
+- Fix logs box responsive issue
 
-### 2. Write unit and feature tests for everything
-We need to write automatic tests for every single feature that we have in this app.
-It would probably help the development process.
+Backlog:
 
-### 3. Add resource usage monitoring
-We need to add some stats about the resource usage of the process.
+- Add arguments for custom commands
+- Write unit and feature tests for everything
+- Add resource usage monitoring
+- Make it compatible with Windows
 
-### 4. Make it compatible with Windows
-Currently it only works with UNIX based operating systems.
-We need to make it compatible with Windows too.
