@@ -54,12 +54,16 @@ $logs = load_logs();
         <input type="hidden" name="username" value="<?= isset($_GET['username']) ? $_GET['username'] : '' ?>" />
         <input type="hidden" name="password" value="<?= isset($_GET['password']) ? $_GET['password'] : '' ?>" />
 
-        <b>Process</b>: <select class="dropdown" onchange="event.target.parentNode.submit()" name="command">
-            <?php $currentSelectedCommand = isset($_GET['command']) ? $_GET['command'] : ''; ?>
-            <?php foreach (COMMANDS as $command => $options) { ?>
-                <option <?= $currentSelectedCommand == $command ? 'selected' : '' ?> value="<?= $command ?>"><?= $command ?></option>
-            <?php } ?>
-        </select>
+        <?php if (count(COMMANDS) > 1) { ?>
+            <b>Process</b>: <select class="dropdown" onchange="event.target.parentNode.submit()" name="command">
+                <?php $currentSelectedCommand = isset($_GET['command']) ? $_GET['command'] : ''; ?>
+                <?php foreach (COMMANDS as $command => $options) { ?>
+                    <option <?= $currentSelectedCommand == $command ? 'selected' : '' ?> value="<?= $command ?>"><?= $command ?></option>
+                <?php } ?>
+            </select>
+        <?php } else { ?>
+            <b><?= get_current_selected_command()['name'] ?></b>
+        <?php } ?>
 
         <p><?= get_current_selected_command()['description'] ?></p>
     </form>
