@@ -249,5 +249,28 @@ And another thing to mention is that you can use all of the available functions 
 in your closures for custom commands (`is_visible`, `is_enable`, `handle`).
 Like the example above that we've used `user_has_permission`.
 
+### Builtin actions
+There are also some builtin actions implemented in process manager.
+
+To register them, you have to add this line in the end of your `settings.php`:
+
+```php
+// ...
+register_builtin_custom_actions();
+// ...
+```
+
+1. `enter_input`: Gives you the ability to send an input to process stdin.
+
+```php
+// ...
+"custom_actions" => ["enter_input"],
+// ...
+```
+
+Then it will receive the input from user and then sends it to the process stdin.
+
+> More builtin actions will be added in future...
+
 ## License
 This project is created and maintained by [Parsa](https://github.com/parsampsh) and licensed under [MIT License](LICENSE).
