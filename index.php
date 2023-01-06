@@ -51,9 +51,6 @@ $logs = load_logs();
 
 <div>
     <form method="GET">
-        <input type="hidden" name="username" value="<?= isset($_GET['username']) ? $_GET['username'] : '' ?>" />
-        <input type="hidden" name="password" value="<?= isset($_GET['password']) ? $_GET['password'] : '' ?>" />
-
         <?php if (count(COMMANDS) > 1) { ?>
             <b>Process</b>: <select class="dropdown" onchange="event.target.parentNode.submit()" name="command">
                 <?php $currentSelectedCommand = isset($_GET['command']) ? $_GET['command'] : ''; ?>

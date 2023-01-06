@@ -10,7 +10,7 @@
             <div class="logged-in-as">
                 <span>
                     Logged in as <b><?= attempt_login() ?></b>
-                    <a class="button red-button" href="?username=&password=">Logout</a>
+                    <a class="button red-button" href="?username=&password=&logout=1">Logout</a>
                 </span>
             </div>
         <?php } ?>

@@ -1,5 +1,9 @@
 <?php
 
+
+session_start();
+
+
 /**
  * This function checks the configs and checks if there is any user implemented or not
  * If these is no item in USERS constant, this means that the app doesn't need authentication
@@ -29,8 +33,12 @@ function attempt_login(array $data = []): bool|string
     }
 
     if (!isset($data['username']) || !isset($data['password'])) {
-        // parameters missing
-        return false;
+        if (isset($_SESSION['username']) && isset($_SESSION['password'])) {
+            $data['username'] = $_SESSION['username'];
+            $data['password'] = $_SESSION['password'];
+        } else {
+            return false;
+        }
     }
 
     if (!isset(USERS[$data['username']])) {
@@ -42,6 +50,9 @@ function attempt_login(array $data = []): bool|string
         // wrong password
         return false;
     }
+
+    $_SESSION['username'] = $data['username'];
+    $_SESSION['password'] = $data['password'];
 
     // valid credentials and successful login
     return $data['username'];
@@ -101,7 +112,15 @@ function authentication(): void
         // then the authentication is required
         if (attempt_login($_GET)) {
             // authorized
+            if (isset($_GET['username']) || isset($_GET['password'])) {
+                header('Location: ' . explode('?', get_current_url())[0]);
+                die();
+            }
         } else {
+            if (isset($_GET['logout'])) {
+                $_SESSION['username'] = null;
+                $_SESSION['password'] = null;
+            }
             // check if there has been an attempt for login so we should show error
             if (isset($_GET['attempt_login'])) {
                 $alert_text = "Invalid username or password";
