@@ -83,24 +83,31 @@ $logs = load_logs();
         <h4>Actions</h4>
         <form method="POST">
             <?php if (user_has_permission(PERMISSION_START)) { ?>
-                <button class="button green-button" <?= $isRunning ? 'disabled' : '' ?> type="submit" name="start">Start</button>
+                <div class="action-section">
+                    <button class="button green-button" <?= $isRunning ? 'disabled' : '' ?> type="submit" name="start">Start</button>
+                </div>
             <?php } ?>
 
             <?php if (user_has_permission(PERMISSION_STOP)) { ?>
-                <button class="button red-button" <?= $isRunning ? '' : 'disabled' ?> type="submit" name="stop">Stop</button>
+                <div class="action-section">
+                    <button class="button red-button" <?= $isRunning ? '' : 'disabled' ?> type="submit" name="stop">Stop</button>
+                </div>
             <?php } ?>
 
             <?php foreach (get_custom_actions() as $action => $options) { ?>
                 <?php if (is_custom_action_visible($action)) { ?>
-                    <?php if (count($options['parameters']) > 0 && is_custom_action_enabled($action)) { ?>
-                        <div class="action-params action-<?= $action ?>-params" id="action_<?= $action ?>_params">
-                            <?php foreach ($options['parameters'] as $param => $description) { ?>
-                                <?= $description ?>: <input class="text-input" placeholder="<?= $description ?>" type="text" name="param_<?= $action ?>_<?= $param ?>" />
-                            <?php } ?>
-                        </div>
-                    <?php } ?>
+                    <div class="action-section">
+                        <?php if (count($options['parameters']) > 0 && is_custom_action_enabled($action)) { ?>
+                            <div class="action-params action-<?= $action ?>-params" id="action_<?= $action ?>_params">
+                                <span onclick="action_close()" class="action-close">X</span>
+                                <?php foreach ($options['parameters'] as $param => $description) { ?>
+                                    <?= $description ?>: <input class="text-input" placeholder="<?= $description ?>" type="text" name="param_<?= $action ?>_<?= $param ?>" />
+                                <?php } ?>
+                            </div>
+                        <?php } ?>
 
-                    <button title="<?= $options['description'] ?>" class="button <?= $options['button_color'] ?>-button" <?= is_custom_action_enabled($action) ? '' : 'disabled' ?> type="submit" name="<?= $action ?>"><?= $options['title'] ?></button>
+                        <button <?= count($options['parameters']) > 0 ? 'onclick="action_handle_params()"' : '' ?> title="<?= $options['description'] ?>" class="button <?= $options['button_color'] ?>-button" <?= is_custom_action_enabled($action) ? '' : 'disabled' ?> type="submit" name="<?= $action ?>"><?= $options['title'] ?></button>
+                    </div>
                 <?php } ?>
             <?php } ?>
         </form>
