@@ -35,6 +35,7 @@ const COMMANDS = [
     'Main' => [
         'command' => 'python3 -u test-script.py', // the command to run
         'working_dir' => __DIR__, // working directory of the command
+        'stdin_file' => __DIR__ . '/stdin-file.txt', // a file that will be used to handle sending inputs to the process
         'log_file' => __DIR__ . '/log-file.txt', // a file to log command output to it
         'log_tail_maximum_lines' => 20, // number of the lines for the log file tail when we show the logs
         'process_id_file' => 'process-id.txt', // a file to store the process id for the command
@@ -45,12 +46,13 @@ const COMMANDS = [
     'Second' => [
         'command' => 'python3 -u test-script-2.py',
         'working_dir' => __DIR__,
+        'stdin_file' => __DIR__ . '/stdin-file-2.txt',
         'log_file' => __DIR__ . '/log-file-2.txt',
         'log_tail_maximum_lines' => 20,
         'process_id_file' => 'process-id-2.txt',
         'kill_signal' => S_TERM, // these options are available: S_HUP, S_INT, S_QUIT, S_ILL, S_TRAP, S_IOT, S_BUS, S_FPE, S_KILL, S_USR1, S_SEGV, S_USR2, S_PIPE, S_ALRM, S_TERM, S_STKFLT, S_CHLD, S_CONT, S_STOP, S_TSTP, S_TTIN, S_TTOU, S_URG, S_XCPU, S_XFSZ, S_VTALRM, S_PROF, S_WINCH, S_POLL, S_PWR, S_SYS
         'description' => 'This is a description for the second command. You can leave this field as a blank "" string',
-        'custom_actions' => ['force_kill'],
+        'custom_actions' => ['force_kill', 'enter_input'],
     ],
 ];
 
@@ -73,3 +75,5 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
         }),
     ],
 ];
+
+register_builtin_custom_actions();

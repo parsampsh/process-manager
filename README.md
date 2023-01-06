@@ -93,6 +93,7 @@ const COMMANDS = [
     'Main' => [
         'command' => 'python3 test-script.py', // the command to run
         'working_dir' => __DIR__, // working directory of the command
+        'stdin_file' => __DIR__ . '/stdin-file.txt', // a file that will be used to handle sending inputs to the process
         'log_file' => __DIR__ . '/log-file.txt', // a file to log command output to it
         'log_tail_maximum_lines' => 20, // number of the lines for the log file tail when we show the logs
         'process_id_file' => 'process-id.txt', // a file to store the process id for the command
@@ -102,6 +103,7 @@ const COMMANDS = [
     'Second' => [
         'command' => 'python3 test-script.py',
         'working_dir' => __DIR__,
+        'stdin_file' => __DIR__ . '/stdin-file-2.txt',
         'log_file' => __DIR__ . '/log-file-2.txt',
         'log_tail_maximum_lines' => 20,
         'process_id_file' => 'process-id-2.txt',
@@ -200,6 +202,11 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
         }),
         'handle' => (function ($processID) { // and in this closure, you will handle running the action
             exec('kill -KILL ' . $processID);
+            // You can do lots of things in here
+            // For example you can send a string to process STDIN:
+            $stdin_file = fopen(get_current_selected_command()['stdin_file'], 'a'); // open process stdin file in "append" mode
+            fwrite($stdin_file, "Hello!".PHP_EOL); // send the input
+            fclose($stdin_file);
         }),
     ],
     'another_action' => [

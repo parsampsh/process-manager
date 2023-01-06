@@ -57,6 +57,7 @@ function validate_configuration(): bool
             if (is_array($command)) {
                 $result = handle_single_check(isset($command['command']) && is_string($command['command']), 'Option "command" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['working_dir']) && is_string($command['working_dir']), 'Option "working_dir" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
+                $result = handle_single_check(isset($command['stdin_file']) && is_string($command['stdin_file']), 'Option "stdin_file" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['log_file']) && is_string($command['log_file']), 'Option "log_file" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;
                 $result = handle_single_check(isset($command['log_tail_maximum_lines']) && is_integer($command['log_tail_maximum_lines']), 'Option "log_tail_maximum_lines" for command "' . convert_to_string($command_name) . '" is not set or is not an integer') && $result;
                 $result = handle_single_check(isset($command['process_id_file']) && is_string($command['process_id_file']), 'Option "process_id_file" for command "' . convert_to_string($command_name) . '" is not set or is not a string') && $result;

@@ -106,3 +106,35 @@ function run_custom_action(string $action_name)
 
     return call_user_func_array($callable, [get_current_process_id()]);
 }
+
+
+const PERMISSION_BUILTIN_ACTION_ENTER_INPUT = 24654765;
+
+
+/**
+ * Registers the builtin custom actions
+ * 
+ * @return void
+ */
+function register_builtin_custom_actions(): void
+{
+    if (!isset($GLOBALS['CUSTOM_ACTIONS']['enter_input'])) {
+        $GLOBALS['CUSTOM_ACTIONS']['enter_input'] = [
+            'title' => 'Enter input',
+            'description' => 'Enters an input into process STDIN',
+            'button_color' => 'blue',
+            'is_visible' => (function () {
+                return user_has_permission(PERMISSION_BUILTIN_ACTION_ENTER_INPUT);
+            }),
+            'is_enabled' => (function ($processID) {
+                return $processID !== false;
+            }),
+            'handle' => (function ($processID) {
+                $input = 'Test';
+                $stdin_file = fopen(get_current_selected_command()['stdin_file'], 'a');
+                fwrite($stdin_file, $input.PHP_EOL);
+                fclose($stdin_file);
+            }),
+        ];
+    }
+}

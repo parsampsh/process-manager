@@ -21,10 +21,10 @@ function is_unix(): bool
  *
  * @return int
  */
-function os_shell_exec(string $command, string $outputFile = '/dev/null'): int
+function os_shell_exec(string $command, string $outputFile = '/dev/null', string $inputFile = '/dev/null'): int
 {
     if (is_unix()) {
-        return unix_shell_exec($command, $outputFile);
+        return unix_shell_exec($command, $outputFile, $inputFile);
     } else {
         return win_shell_exec($command, $outputFile);
     }
@@ -39,10 +39,10 @@ function os_shell_exec(string $command, string $outputFile = '/dev/null'): int
  *
  * @return int
  */
-function unix_shell_exec(string $command, string $outputFile = '/dev/null'): int
+function unix_shell_exec(string $command, string $outputFile = '/dev/null', string $inputFile = '/dev/null'): int
 {
     return shell_exec(sprintf(
-        '%s > %s 2>&1 & echo $!',
+        'tail -f "'.$inputFile.'" | %s > %s 2>&1 & echo $!',
         $command,
         $outputFile,
     ));

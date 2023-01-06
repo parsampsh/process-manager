@@ -62,11 +62,16 @@ function get_current_selected_command(): array
  * 
  * @return int
  */
-function run_command_in_bg(string $command, string $outputFile = '/dev/null'): int
+function run_command_in_bg(string $command, string $outputFile = '/dev/null', string $inputFile = '/dev/null'): int
 {
+    // clear the input file
+    $f = fopen($inputFile, 'w');
+    fwrite($f, '');
+    fclose($f);
+
     $original_working_dir = getcwd();
     chdir(get_current_selected_command()['working_dir']);
-    $pid = os_shell_exec($command, $outputFile);
+    $pid = os_shell_exec($command, $outputFile, $inputFile);
     chdir($original_working_dir);
     return $pid;
 }
@@ -129,7 +134,7 @@ function start_process(): void
 
     user_make_log_entry('Started the process');
 
-    $processID = run_command_in_bg(get_current_selected_command()['command'], get_current_selected_command()['log_file']);
+    $processID = run_command_in_bg(get_current_selected_command()['command'], get_current_selected_command()['log_file'], get_current_selected_command()['stdin_file']);
     save_ran_process_id($processID);
 }
 
