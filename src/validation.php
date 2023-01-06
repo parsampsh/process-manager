@@ -112,6 +112,13 @@ function validate_configuration(): bool
                 $result = handle_single_check(isset($action['is_visible']) && is_callable($action['is_visible']), 'Option "is_visible" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
                 $result = handle_single_check(isset($action['is_enabled']) && is_callable($action['is_enabled']), 'Option "is_enabled" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
                 $result = handle_single_check(isset($action['handle']) && is_callable($action['handle']), 'Option "handle" for custom action "' . convert_to_string($action_name) . '" is not set or is not a callable') && $result;
+                $result = handle_single_check(isset($action['parameters']) && is_array($action['parameters']), 'Option "parameters" for custom action "' . convert_to_string($action_name) . '" is not set or is not an array') && $result;
+
+                if (isset($action['parameters']) && is_array($action['parameters'])) {
+                    foreach ($action['parameters'] as $k => $v) {
+                        $result = handle_single_check(is_string($k) && is_string($v), 'Item "'.convert_to_string($k).'" and it\'s value in "parameters" for custom action "' . convert_to_string($action_name) . '" should be strings') && $result;
+                    }
+                }
             }
         }
     }

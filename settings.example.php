@@ -73,6 +73,7 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
         'handle' => (function ($processID) { // and in this closure, you will handle running the action
             exec('kill -KILL ' . $processID);
         }),
+        'parameters' => [],
     ],
 ];
 

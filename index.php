@@ -92,6 +92,14 @@ $logs = load_logs();
 
             <?php foreach (get_custom_actions() as $action => $options) { ?>
                 <?php if (is_custom_action_visible($action)) { ?>
+                    <?php if (count($options['parameters']) > 0 && is_custom_action_enabled($action)) { ?>
+                        <div class="action-params action-<?= $action ?>-params" id="action_<?= $action ?>_params">
+                            <?php foreach ($options['parameters'] as $param => $description) { ?>
+                                <?= $description ?>: <input class="text-input" placeholder="<?= $description ?>" type="text" name="param_<?= $action ?>_<?= $param ?>" />
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+
                     <button title="<?= $options['description'] ?>" class="button <?= $options['button_color'] ?>-button" <?= is_custom_action_enabled($action) ? '' : 'disabled' ?> type="submit" name="<?= $action ?>"><?= $options['title'] ?></button>
                 <?php } ?>
             <?php } ?>

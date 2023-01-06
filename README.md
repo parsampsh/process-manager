@@ -208,6 +208,7 @@ $GLOBALS['CUSTOM_ACTIONS'] = [
             fwrite($stdin_file, "Hello!".PHP_EOL); // send the input
             fclose($stdin_file);
         }),
+        'parameters' => [], // you can define parameters for your action
     ],
     'another_action' => [
         // ...
@@ -249,6 +250,47 @@ And another thing to mention is that you can use all of the available functions 
 in your closures for custom commands (`is_visible`, `is_enable`, `handle`).
 Like the example above that we've used `user_has_permission`.
 
+### Action parameters
+There is another feature that gives you the ability to add "parameters" for your action.
+
+Then when user attempts to run your custom action, the parameters will be asked from user.
+
+```php
+'parameters' => [
+    'name' => 'Please enter your name',
+],
+// ...
+// then you can access then in `handle`:
+'handle' => (function ($processID, $params) {
+    $params['name']; // do something with it...
+}),
+```
+
+This is a good example:
+
+```php
+$GLOBALS['CUSTOM_ACTIONS']['enter_input'] = [
+    'title' => 'Enter input',
+    'description' => 'Enters an input into process STDIN',
+    'button_color' => 'blue',
+    'is_visible' => (function () {
+        return user_has_permission(PERMISSION_BUILTIN_ACTION_ENTER_INPUT);
+    }),
+    'is_enabled' => (function ($processID) {
+        return $processID !== false;
+    }),
+    'parameters' => [
+        'input' => 'Enter the input',
+    ],
+    'handle' => (function ($processID, $params) {
+        $input = $params['input'];
+        $stdin_file = fopen(get_current_selected_command()['stdin_file'], 'a');
+        fwrite($stdin_file, $input.PHP_EOL);
+        fclose($stdin_file);
+    }),
+];
+```
+
 ### Builtin actions
 There are also some builtin actions implemented in process manager.
 
@@ -267,6 +309,8 @@ register_builtin_custom_actions();
 "custom_actions" => ["enter_input"],
 // ...
 ```
+
+Permission for this action is `PERMISSION_BUILTIN_ACTION_ENTER_INPUT`.
 
 Then it will receive the input from user and then sends it to the process stdin.
 

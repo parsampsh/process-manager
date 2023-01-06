@@ -102,9 +102,21 @@ function run_custom_action(string $action_name)
         return false;
     }
 
+    // load parameters
+    $params = [];
+    foreach (get_custom_actions()[$action_name]['parameters'] as $k => $v) {
+        if (isset($_POST['param_'.$action_name.'_'.$k])) {
+            $params[$k] = $_POST['param_'.$action_name.'_'.$k];
+        } else if (isset($_GET['param_'.$action_name.'_'.$k])) {
+            $params[$k] = $_GET['param_'.$action_name.'_'.$k];
+        } else {
+            $params[$k] = null;
+        }
+    }
+
     $callable = get_custom_actions()[$action_name]['handle'];
 
-    return call_user_func_array($callable, [get_current_process_id()]);
+    return call_user_func_array($callable, [get_current_process_id(), $params]);
 }
 
 
@@ -129,8 +141,11 @@ function register_builtin_custom_actions(): void
             'is_enabled' => (function ($processID) {
                 return $processID !== false;
             }),
-            'handle' => (function ($processID) {
-                $input = 'Test';
+            'parameters' => [
+                'input' => 'Enter the input',
+            ],
+            'handle' => (function ($processID, $params) {
+                $input = $params['input'];
                 $stdin_file = fopen(get_current_selected_command()['stdin_file'], 'a');
                 fwrite($stdin_file, $input.PHP_EOL);
                 fclose($stdin_file);
