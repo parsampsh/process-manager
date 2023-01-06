@@ -7,6 +7,8 @@ This small PHP dashboard is created to solve this problem:
 > And see it's logs.
 > Simple as that.
 
+(Note: This only works in UNIX based operating systems, not Windows)
+
 ## Setup
 To set this thing up, first clone the project, then:
 
