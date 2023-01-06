@@ -65,6 +65,11 @@
                     actions_params[i].style.display = 'none';
                 }
             }
+
+            var logs = document.querySelectorAll(".logs-container");
+            for (var i = 0; i < logs.length; i++) {
+                logs[i].scrollTop = logs[i].scrollHeight;
+            }
         </script>
 
         <style>

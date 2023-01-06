@@ -114,16 +114,6 @@ $logs = load_logs();
     </div>
 <?php } ?>
 
-<?php if (user_has_permission(PERMISSION_READ_STATS)) { ?>
-    <hr />
-    <div>
-        <h4 style="float: left;">Stats</h4>
-        <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
-        <div style="clear: both;"></div>
-        <pre class="logs-container">Coming soon...</pre>
-    </div>
-<?php } ?>
-
 <?php if (user_has_permission(PERMISSION_READ_LOG)) { ?>
     <hr />
     <div>
@@ -131,6 +121,16 @@ $logs = load_logs();
         <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
         <div style="clear: both;"></div>
         <pre class="logs-container"><?= htmlspecialchars($logs) ?></pre>
+    </div>
+<?php } ?>
+
+<?php if (user_has_permission(PERMISSION_READ_STATS)) { ?>
+    <hr />
+    <div>
+        <h4 style="float: left;">Stats</h4>
+        <a href="" class="button blue-button" style="float: right; text-decoration: none;">Refresh</a>
+        <div style="clear: both;"></div>
+        <pre class="logs-container">Coming soon...</pre>
     </div>
 <?php } ?>
 
