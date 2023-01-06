@@ -291,6 +291,14 @@ $GLOBALS['CUSTOM_ACTIONS']['enter_input'] = [
 ];
 ```
 
+Also if you wanna call your action using API, you can pass the parameters this way:
+
+```
+/api.php?command=Something&action=enter_input&param_enter_input_input=something
+```
+
+The param name would be `param_<action-name>_<param-name>`.
+
 ### Builtin actions
 There are also some builtin actions implemented in process manager.
 
