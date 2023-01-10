@@ -116,6 +116,8 @@ function run_custom_action(string $action_name)
 
     $callable = get_custom_actions()[$action_name]['handle'];
 
+    user_make_log_entry('Ran custom action "'.$action_name.'"' . (count($params) > 0 ? ' with these parameters: '.(json_encode($params)) : ''));
+
     return call_user_func_array($callable, [get_current_process_id(), $params]);
 }
 
