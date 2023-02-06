@@ -46,7 +46,7 @@ function attempt_login(array $data = []): bool|string
         return false;
     }
 
-    if (USERS[$data['username']]['password'] !== $data['password']) {
+    if (!hash_equals(USERS[$data['username']]['password'], $data['password'])) {
         // wrong password
         return false;
     }
